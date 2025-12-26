@@ -1,0 +1,27 @@
+# Environment files
+.env
+*.secret
+
+# Logs
+config/logs/
+*.log
+
+# Docker / Traefik
+config/letsencrypt/
+*.sqlite
+*.key
+
+# OS / Editor
+*.swp
+*.bak
+*.tmp
+.DS_Store
+.vscode/
+.idea/
+
+# Node / npm (if Next.js is used by Pangolin)
+node_modules/
+
+# Compiled binaries / temporary files
+*.o
+*.out
