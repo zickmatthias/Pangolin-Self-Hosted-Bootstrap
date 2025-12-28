@@ -2,6 +2,20 @@
 set -Eeuo pipefail
 trap 'echo "❌ Fehler in Zeile $LINENO"' ERR
 
+# --- Logs ---
+mkdir -p /var/log/setup
+exec > >(tee -i /var/log/setup/main.log) 2>&1
+
+# --- Root check ---
+if [[ $EUID -ne 0 ]]; then
+    echo "Dieses Script muss als root ausgeführt werden." >&2
+    exit 1
+fi
+
+# --- Logging-Funktion ---
+log() { echo "[LOG] $*"; }
+
+# --- Deine Quellen ---
 source lib/env.sh
 source lib/system.sh
 source lib/docker.sh
