@@ -29,7 +29,7 @@ load_env() {
 
   # Alle Variablen exportieren
   set -a
-  source <(grep -Ev '^(#|$)' "$ENV_FILE")
+  source "$ENV_FILE"
   set +a
 
   log ".env erfolgreich geladen"
