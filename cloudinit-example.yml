@@ -7,7 +7,7 @@ write_files:
     content: |
       BASE_DOMAIN=example.com
       DASHBOARD_SUBDOMAIN=pangolin
-      PANGOLIN_SERVER_SECRET=REDACTED
+      PANGOLIN_SERVER_SECRET=7N1qXR7C3holjPT4bna2THFz8qB/JDRa2aasi8u11zY=
       REQUIRE_EMAIL_VERIFICATION=false
       DISABLE_SIGNUP_WITHOUT_INVITE=true
       DISABLE_USER_CREATE_ORG=true
@@ -24,5 +24,7 @@ packages:
 runcmd:
   - mkdir -p /opt/setup
   - git clone https://github.com/zickmatthias/Pangolin-Self-Hosted-Bootstrap.git /opt/setup/app
+  - cp /opt/setup/.env /opt/setup/app/.env
   - chmod +x /opt/setup/app/install.sh
-  - bash /opt/setup/app/install.sh
+  - cd /opt/setup/app
+  - bash install.sh

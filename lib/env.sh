@@ -19,10 +19,11 @@ is_bool() {
 load_env() {
   # Absoluter Pfad zum Script
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-  ENV_FILE="$SCRIPT_DIR/.env"
+  # .env ist im Projektroot (ein Verzeichnis über lib/)
+  ENV_FILE="$(dirname "$SCRIPT_DIR")/.env"
 
   if [ ! -f "$ENV_FILE" ]; then
-      echo "❌ .env fehlt im Verzeichnis $SCRIPT_DIR"
+      echo "❌ .env fehlt im Verzeichnis $(dirname "$SCRIPT_DIR")"
       exit 1
   fi
 
