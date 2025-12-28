@@ -10,7 +10,7 @@ generate_all_configs() {
 generate_docker_compose() {
   log "docker-compose.yml erzeugen"
 
-  cat > docker-compose.yml <<EOF
+  cat > /opt/config/docker-compose.yml <<EOF
 services:
   pangolin:
     image: fosrl/pangolin:latest
