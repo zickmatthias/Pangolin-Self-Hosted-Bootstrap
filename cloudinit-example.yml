@@ -3,7 +3,7 @@
 write_files:
   - path: /opt/setup/.env
     owner: root:root
-    permissions: '600'
+    permissions: '0600'
     content: |
       BASE_DOMAIN=example.com
       DASHBOARD_SUBDOMAIN=pangolin
