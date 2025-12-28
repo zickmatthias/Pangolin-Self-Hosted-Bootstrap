@@ -28,7 +28,7 @@ load_env
 validate_env
 
 system_prepare
-#docker_install
+docker_install
 generate_all_configs
 #pangolin_up
 
