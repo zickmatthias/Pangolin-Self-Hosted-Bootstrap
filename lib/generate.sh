@@ -101,14 +101,22 @@ generate_pangolin_config() {
   log "Pangolin config.yml"
 
   cat > /opt/config/config.yml <<EOF
+app:
+  dashboard_url: "${DASHBOARD_URL}"
+
+domains:
+  domain1:
+    base_domain: "${DASHBOARD_HOST}"
+    cert_resolver: "letsencrypt"
+
 server:
   secret: "${PANGOLIN_SERVER_SECRET}"
+gerbil:
+  base_endpoint: "${DASHBOARD_HOST}"
+
+flags:
   require_email_verification: ${REQUIRE_EMAIL_VERIFICATION}
   disable_signup_without_invite: ${DISABLE_SIGNUP_WITHOUT_INVITE}
   disable_user_create_org: ${DISABLE_USER_CREATE_ORG}
-
-app:
-  base_url: "${DASHBOARD_URL}"
-  admin_email: "${ADMIN_EMAIL}"
 EOF
 }
