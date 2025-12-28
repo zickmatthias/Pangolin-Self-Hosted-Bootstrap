@@ -7,7 +7,10 @@ log() {
 
 # --- Variable prüfen ---
 require_var() {
-  [ -z "${!1:-}" ] && { echo "❌ Missing ENV: $1"; exit 1; }
+  if [ -z "${!1:-}" ]; then
+    echo "❌ Missing ENV: $1"
+    exit 1
+  fi
 }
 
 # --- Boolean prüfen ---
@@ -28,9 +31,14 @@ load_env() {
   fi
 
   # Alle Variablen exportieren (Kommentare und leere Zeilen ignorieren)
-  set -a
-  source <(grep -v '^#' "$ENV_FILE" | grep -v '^$')
-  set +a
+  while IFS='=' read -r key value; do
+    # Ignoriere Zeilen mit # am Anfang
+    [[ "$key" =~ ^#.* ]] && continue
+    # Ignoriere leere Zeilen
+    [[ -z "$key" ]] && continue
+    # Exportiere Variable
+    export $key="$value"
+  done < <(grep -v '^[[:space:]]*$' "$ENV_FILE" | grep -v '^[[:space:]]*#')
 
   log ".env erfolgreich geladen"
 }
