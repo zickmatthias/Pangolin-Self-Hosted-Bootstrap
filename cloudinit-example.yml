@@ -1,0 +1,28 @@
+#cloud-config
+
+write_files:
+  - path: /opt/setup/.env
+    owner: root:root
+    permissions: '600'
+    content: |
+      BASE_DOMAIN=example.com
+      DASHBOARD_SUBDOMAIN=pangolin
+      PANGOLIN_SERVER_SECRET=REDACTED
+      REQUIRE_EMAIL_VERIFICATION=false
+      DISABLE_SIGNUP_WITHOUT_INVITE=true
+      DISABLE_USER_CREATE_ORG=true
+      ADMIN_EMAIL=user@example.com
+
+packages:
+  - git
+  - curl
+  - wget
+  - unzip
+  - htop
+  - less
+
+runcmd:
+  - mkdir -p /opt/setup
+  - git clone https://github.com/zickmatthias/Pangolin-Self-Hosted-Bootstrap.git /opt/setup/app
+  - chmod +x /opt/setup/app/install.sh
+  - bash /opt/setup/app/install.sh
