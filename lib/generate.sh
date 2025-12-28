@@ -16,7 +16,7 @@ services:
     image: fosrl/pangolin:latest
     restart: unless-stopped
     volumes:
-      - ./config:/app/config
+      - /opt/config:/app/config
 
   gerbil:
     image: fosrl/gerbil:latest
@@ -29,7 +29,7 @@ services:
       - --generateAndSaveKeyTo=/var/config/key
       - --remoteConfig=http://pangolin:3001/api/v1/
     volumes:
-      - ./config:/var/config
+      - /opt/config:/var/config
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
@@ -48,15 +48,15 @@ services:
     command:
       - --configFile=/etc/traefik/traefik_config.yml
     volumes:
-      - ./config/traefik:/etc/traefik:ro
-      - ./config/letsencrypt:/letsencrypt
+      - /opt/config/traefik:/etc/traefik:ro
+      - /opt/config/letsencrypt:/letsencrypt
 EOF
 }
 
 generate_traefik_static() {
   log "Traefik static config"
 
-  cat > config/traefik/traefik_config.yml <<EOF
+  cat > /opt/config/traefik/traefik_config.yml <<EOF
 certificatesResolvers:
   letsencrypt:
     acme:
@@ -79,7 +79,7 @@ EOF
 generate_traefik_dynamic() {
   log "Traefik dynamic config"
 
-  cat > config/traefik/dynamic_config.yml <<EOF
+  cat > /opt/config/traefik/dynamic_config.yml <<EOF
 http:
   routers:
     app:
@@ -100,7 +100,7 @@ EOF
 generate_pangolin_config() {
   log "Pangolin config.yml"
 
-  cat > config/config.yml <<EOF
+  cat > /opt/config/config.yml <<EOF
 server:
   secret: "${PANGOLIN_SERVER_SECRET}"
   require_email_verification: ${REQUIRE_EMAIL_VERIFICATION}
